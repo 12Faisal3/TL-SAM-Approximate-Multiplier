@@ -1,1 +1,43 @@
+// ============================================================
+// TL-SAM Approximate Multiplier
+// ------------------------------------------------------------
+// Author  : Faisal
+// Description:
+// Truncated logarithmic approximate multiplier for
+// error-resilient Edge-AI applications.
+// ============================================================
+// ============================================================
+// 16-bit TL-SAM HA Configuration
+// ============================================================
 
+module TLAM16_HA (
+    input  [15:0] A,
+    input  [15:0] B,
+    output [31:0] P
+);
+
+    wire [7:0] AH = A[15:8];
+    wire [7:0] AL = A[7:0];
+
+    wire [7:0] BH = B[15:8];
+    wire [7:0] BL = B[7:0];
+
+    wire [15:0] PHH;
+    wire [15:0] PHL;
+    wire [15:0] PLH;
+    wire [15:0] PLL;
+
+    // Exact multipliers
+    EXACT8 U1 (.a(AH), .b(BH), .p(PHH));
+    EXACT8 U2 (.a(AH), .b(BL), .p(PHL));
+    EXACT8 U3 (.a(AL), .b(BH), .p(PLH));
+
+    // Approximate multiplier
+    TL8_3_2 U4 (.x(AL), .y(BL), .p(PLL));
+
+    assign P =
+           (PHH << 16)
+         + ((PHL + PLH) << 8)
+         + PLL;
+
+endmodule
