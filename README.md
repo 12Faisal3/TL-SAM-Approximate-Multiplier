@@ -1,4 +1,5 @@
-# TL-SAM: Truncated Logarithmic Segmentation-Based Approximate Multiplier
+# TL-SAM: Truncated Logarithmic Segmentation-Based Approximate Multiplier 
+# *(Remaining code will be available after the acceptance of the work)*
 
 This repository contains the reference implementation of TL-SAM, a configurable truncated logarithmic approximate multiplier architecture designed for energy-efficient Edge-AI and error-resilient computing applications.
 
